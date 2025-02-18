@@ -42,6 +42,10 @@
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });
+
+  socket.on('alert', (msg) => {
+        alert(msg);
+    });
     </script>
   </body>
 </html>

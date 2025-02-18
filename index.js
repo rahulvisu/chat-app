@@ -8,9 +8,13 @@ const io=new Server(server);
 app.get('/',(req,res)=>{
     const filePath = path.join(__dirname, './views', 'index.html');
     res.sendFile(filePath);
-});
+}); 
 
 io.on('connection', (socket) => {
+  console.log(`A user connected: ${socket.id}`);
+
+  // Notify all users about the new connection
+  io.emit('alert', 'A new user has joined the chat!');
     socket.on('chat message', (msg) => {
       io.emit('chat message', msg);
     });
