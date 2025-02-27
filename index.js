@@ -5,22 +5,24 @@ const app=express()
 const socketio=require('socket.io')
 const server=http.createServer(app)
 const io=socketio(server)
-
+const format=require('./utils/format.js')
+ const admin="echobot"
 io.on('connection', (socket) => {  
   // Emit a welcome message to the connecting client
-  socket.emit('message', 'Welcome to chatcord');
+  socket.emit('message', format(admin,'Welcome to chatcord'));
 
   // Emit a message to everyone except the connecting client
-  socket.broadcast.emit('message', 'A user has joined the chat');
+  socket.broadcast.emit('message', format(admin,'A user has joined the chat'));
 
   // Emit a message to everyone (including the connecting client)
   // io.emit('message', 'A user has joined the chat');
   socket.on("disconnect",(socket)=>{
-    io.emit('message','User disconnected');
+    io.emit('message',format(admin,'User disconnected'));
   })
 
   socket.on("chatmessage",(message)=>{
-    console.log(message)
+    //console.log(message)
+    io.emit('message',format('USER',message))
   })
 
 });
